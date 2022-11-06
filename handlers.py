@@ -25,20 +25,24 @@ from keyboards import (
 router = Router()
 
 
-@router.message(commands=['start', 'restart'])
-@router.callback_query(text='restart')
-async def start(call: Message | CallbackQuery, state: FSMContext):
+async def start(answer, state: FSMContext):
     await state.update_data(opinion_index=0, sum1=0, sum2=0)
-    answer = call.answer
-    is_callback = type(call) == CallbackQuery
-    if is_callback:
-        answer = call.message.answer
     await answer(
         START_TEXT,
         reply_markup=get_start_keyboard().as_markup(resize_keyboard=True)
     )
-    if is_callback:
-        await call.answer()
+
+
+@router.message(commands=['start'])
+async def cmd_start(message: Message, state: FSMContext):
+    await state.clear()
+    await start(message.answer, state)
+
+
+@router.callback_query(text='restart')
+async def callbacks_start(callback: CallbackQuery, state: FSMContext):
+    await start(callback.message.answer, state)
+    await callback.answer()
 
 
 @router.callback_query(Text(text_startswith='start_'))
