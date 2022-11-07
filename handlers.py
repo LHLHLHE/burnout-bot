@@ -44,12 +44,14 @@ async def cmd_start(message: Message, state: FSMContext):
 
 @router.callback_query(text='restart')
 async def callbacks_start(callback: CallbackQuery, state: FSMContext):
+    await callback.message.edit_reply_markup(reply_markup=None)
     await start(callback.message.answer, state)
     await callback.answer()
 
 
 @router.callback_query(Text(text_startswith='start_'))
 async def callbacks_choose_test(callback: CallbackQuery, state: FSMContext):
+    await callback.message.edit_reply_markup(reply_markup=None)
     test_name = callback.data.split('_')[1]
     test_data = []
 
@@ -129,6 +131,7 @@ async def callback_answer(callback: CallbackQuery, state: FSMContext):
             ),
             reply_markup=get_end_keyboard().as_markup()
         )
+        await callback.message.delete()
         await state.clear()
     await callback.answer()
 
