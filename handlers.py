@@ -14,7 +14,10 @@ from constants import (
     RT_SUM2_INDEXES,
     ST_SUM1_INDEXES,
     ST_SUM2_INDEXES,
-    END_TEXT
+    END_TEXT,
+    HIGH_ANXIETY_LEVEL,
+    LOW_ANXIETY_LEVEL,
+    MIDDLE_ANXIETY_LEVEL
 )
 from keyboards import (
     get_start_keyboard,
@@ -112,9 +115,17 @@ async def callback_answer(callback: CallbackQuery, state: FSMContext):
         )
     else:
         user_data = await state.get_data()
+        result = test_data[4](user_data['sum1'], user_data['sum2'])
+        if result < 30:
+            anxiety_level = LOW_ANXIETY_LEVEL
+        elif result >= 45:
+            anxiety_level = HIGH_ANXIETY_LEVEL
+        else:
+            anxiety_level = MIDDLE_ANXIETY_LEVEL
         await callback.message.answer(
-            END_TEXT + ': ' + str(
-                test_data[4](user_data['sum1'], user_data['sum2'])
+            END_TEXT.format(
+                str(result),
+                anxiety_level
             ),
             reply_markup=get_end_keyboard().as_markup()
         )
@@ -127,7 +138,7 @@ def lt_rt_calculation(sum1, sum2: int):
 
 
 def st_calculation(sum1, sum2: int):
-    return (sum1 - sum2 + 15) / 4
+    return (sum1 - sum2 + 15) * 4
 
 
 async def update_question_text(message: Message, new_value: str):
