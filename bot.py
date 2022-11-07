@@ -19,7 +19,7 @@ async def main():
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
     )
 
-    bot = Bot(token=TOKEN)
+    bot = Bot(token=TOKEN, parse_mode="HTML")
     dp = Dispatcher(storage=MemoryStorage())
 
     dp.include_router(handlers.router)
