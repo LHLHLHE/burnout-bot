@@ -38,5 +38,5 @@ https://github.com/LHLHLHE/depression-bot
 
 
 ### Отсебятина
-![Дополнение](https://github.com/mmjax/DZ5/загруженное.png)
+![Дополнение](https://github.com/mmjax/MPS_2/загруженное.png)
 
