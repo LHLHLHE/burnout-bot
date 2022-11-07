@@ -35,9 +35,3 @@ https://github.com/LHLHLHE/depression-bot
 [Лев Халяпин](https://github.com/LHLHLHE)
 
 [Максим Скалозубов](https://github.com/mmjax)
-
-
-
-### Отсебятина
-![Дополнение]([https://github.com/mmjax/MPS_2/raw/master/загруженное.png](https://user-images.githubusercontent.com/33595233/200407754-06bfc936-43fa-41ab-a455-cfd0463a6df8.png))
-
