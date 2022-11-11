@@ -15,9 +15,7 @@ from constants import (
     ST_SUM1_INDEXES,
     ST_SUM2_INDEXES,
     END_TEXT,
-    HIGH_ANXIETY_LEVEL,
-    LOW_ANXIETY_LEVEL,
-    MIDDLE_ANXIETY_LEVEL
+    ANXIETY_LEVEL
 )
 from keyboards import (
     get_start_keyboard,
@@ -119,11 +117,11 @@ async def callback_answer(callback: CallbackQuery, state: FSMContext):
         user_data = await state.get_data()
         result = test_data[4](user_data['sum1'], user_data['sum2'])
         if result < 30:
-            anxiety_level = LOW_ANXIETY_LEVEL
+            anxiety_level = ANXIETY_LEVEL.get('low')
         elif result >= 45:
-            anxiety_level = HIGH_ANXIETY_LEVEL
+            anxiety_level = ANXIETY_LEVEL.get('high')
         else:
-            anxiety_level = MIDDLE_ANXIETY_LEVEL
+            anxiety_level = ANXIETY_LEVEL.get('middle')
         await callback.message.answer(
             END_TEXT.format(
                 str(result),
