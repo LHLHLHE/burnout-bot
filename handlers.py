@@ -26,8 +26,7 @@ from keyboards import (
 router = Router()
 
 
-async def start(answer, state: FSMContext):
-    await state.update_data(opinion_index=0, sum1=0, sum2=0)
+async def start(answer):
     await answer(
         START_TEXT,
         reply_markup=get_start_keyboard().as_markup(resize_keyboard=True)
@@ -37,19 +36,20 @@ async def start(answer, state: FSMContext):
 @router.message(commands=['start'])
 async def cmd_start(message: Message, state: FSMContext):
     await state.clear()
-    await start(message.answer, state)
+    await start(message.answer)
 
 
 @router.callback_query(text='restart')
-async def callbacks_start(callback: CallbackQuery, state: FSMContext):
+async def callbacks_start(callback: CallbackQuery):
     await callback.message.edit_reply_markup(reply_markup=None)
-    await start(callback.message.answer, state)
+    await start(callback.message.answer)
     await callback.answer()
 
 
 @router.callback_query(Text(text_startswith='start_'))
 async def callbacks_choose_test(callback: CallbackQuery, state: FSMContext):
     await callback.message.edit_reply_markup(reply_markup=None)
+    await state.update_data(opinion_index=0, sum1=0, sum2=0)
     test_name = callback.data.split('_')[1]
     test_data = []
 
